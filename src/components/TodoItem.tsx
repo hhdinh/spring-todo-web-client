@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Space, Card, Checkbox} from "antd";
+import {Space, Card, Checkbox, Col} from "antd";
 import Todo from "../services/Todo";
+import styles from './styles.module.css'
 
 interface TodoProp {
     todo: Todo;
@@ -13,11 +14,13 @@ class TodoItem extends Component<TodoProp> {
 
     render() {
         return (
-            <Card title={this.props.todo.title}>
-                <p>Description:</p>
-                <p>{this.props.todo.description}</p>
-                <p>Complete: <Checkbox defaultChecked={this.props.todo.complete} disabled/></p>
-            </Card>
+            <Col className="gutter-row" span={6}>
+                <Card title={this.props.todo.title} className={styles.todoCard}>
+                    <p>Description:</p>
+                    <p>{this.props.todo.description}</p>
+                    <p>Complete: <Checkbox defaultChecked={this.props.todo.complete} disabled/></p>
+                </Card>
+            </Col>
         );
     }
 }
