@@ -3,6 +3,7 @@ import {Card, Checkbox, Col, Button, Modal} from "antd";
 import Todo from "../services/Todo";
 import styles from './styles.module.css'
 import {deleteTodoById} from "../services/todoService";
+import TodoUpdateModal from "./TodoUpdateModal";
 
 interface TodoProp {
     todo: Todo;
@@ -12,6 +13,7 @@ interface TodoProp {
 
 interface TodoState {
     modalVisible: boolean;
+    updateModalVisible: boolean;
 
 }
 
@@ -19,7 +21,8 @@ class TodoItem extends Component<TodoProp, TodoState> {
     constructor(props: TodoProp) {
         super(props);
         this.state = {
-            modalVisible: false
+            modalVisible: false,
+            updateModalVisible: false,
         }
     }
 
@@ -36,10 +39,16 @@ class TodoItem extends Component<TodoProp, TodoState> {
         });
     };
 
-    handleCancel = (e: any) => {
-        console.log(e);
+    handleUpdate = () => {
+        this.setState({
+            updateModalVisible: true,
+        });
+    };
+
+    handleCancel = () => {
         this.setState({
             modalVisible: false,
+            updateModalVisible: false
         });
     };
 
@@ -58,6 +67,7 @@ class TodoItem extends Component<TodoProp, TodoState> {
                     <p>Description:</p>
                     <p>{this.props.todo.description}</p>
                     <p>Complete: <Checkbox defaultChecked={this.props.todo.complete} disabled/></p>
+                    <Button type="primary" onClick={this.handleUpdate}>Update</Button>
                     <Button type="primary" danger onClick={this.deleteTodo}>
                         Delete
                     </Button>
@@ -69,6 +79,11 @@ class TodoItem extends Component<TodoProp, TodoState> {
                     >
                         <p className={styles.dangerDeleteTodo}>In order to delete a todo, it MUST be completed!</p>
                     </Modal>
+                    <TodoUpdateModal visible={this.state.updateModalVisible}
+                                     todo={this.props.todo}
+                                     onCancel={this.handleCancel}
+                                     reload={this.props.reload}
+                    />
                 </Card>
             </Col>
         );
