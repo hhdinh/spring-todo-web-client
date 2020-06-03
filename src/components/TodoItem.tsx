@@ -7,7 +7,6 @@ import TodoUpdateModal from "./TodoUpdateModal";
 
 interface TodoProp {
     todo: Todo;
-
     reload(): void;
 }
 
@@ -56,7 +55,7 @@ class TodoItem extends Component<TodoProp, TodoState> {
         if (this.props.todo.id != null && this.props.todo.complete) {
             deleteTodoById(this.props.todo.id).then(() => this.props.reload());
         } else {
-            this.showModal(); //.setState({modalVisible: true});
+            this.showModal();
         }
     }
 
